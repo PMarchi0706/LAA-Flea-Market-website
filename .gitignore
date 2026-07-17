@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Vercel
+.vercel/
+
+# Local dev artifacts
+temporary screenshots/
+
+# Local tooling / editor config
+.claude/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini

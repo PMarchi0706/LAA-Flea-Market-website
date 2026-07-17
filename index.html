@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Flea Market — Los Angeles Apparel</title>
+  <link rel="icon" href="/brand_assets/los_angeles_apparel_logo.jpg" />
+  <meta name="description" content="Overstock, one-offs, and imperfect garments from the Los Angeles Apparel factory floor — sold in person at The Flea Market on 59th Street. Open daily, 10AM–8PM. Free entry." />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Michroma&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#0B0B0B',
+            paper: '#FFFFFF',
+            fog: '#F3F2EF',
+            hairline: '#E3E2DD',
+            muted: '#6E6E6E',
+            'muted-dk': '#9A9A96',
+          },
+          fontFamily: {
+            display: ['Anton', 'sans-serif'],
+            sans: ['Archivo', 'sans-serif'],
+            mono: ['"Space Mono"', 'monospace'],
+            /* EUROSTILE swap point — Michroma stands in for licensed Eurostile Extended Bold.
+               To use the real font later: add @font-face for Eurostile below and change this to ['"Eurostile Extended"','Michroma','sans-serif']. */
+            euro: ['Michroma', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    :root { --shadow-lift: 0 24px 60px -32px rgba(11,11,11,0.45); }
+
+    html { scroll-behavior: smooth; }
+    body { -webkit-font-smoothing: antialiased; }
+
+    ::selection { background: #0B0B0B; color: #fff; }
+
+    /* Grain overlay */
+    .grain::after {
+      content: "";
+      position: absolute; inset: 0;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+      opacity: 0.05;
+      mix-blend-mode: overlay;
+    }
+
+    /* Display type scale */
+    .display-xl {
+      font-family: 'Anton', sans-serif;
+      line-height: 0.86;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      font-size: clamp(3.6rem, 13vw, 12rem);
+    }
+    .display-lg {
+      font-family: 'Anton', sans-serif;
+      line-height: 0.9;
+      letter-spacing: -0.015em;
+      text-transform: uppercase;
+      font-size: clamp(2.6rem, 6.5vw, 5.5rem);
+    }
+    .display-md {
+      font-family: 'Anton', sans-serif;
+      line-height: 0.94;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      font-size: clamp(1.8rem, 3.5vw, 2.75rem);
+    }
+    .eyebrow {
+      font-family: 'Space Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.28em;
+      font-size: 0.72rem;
+    }
+
+    /* Brand wordmark — Michroma standing in for Eurostile Extended Bold (the LAA site face).
+       Used only on brand-identity marks; operational data stays in Space Mono. */
+    .wordmark { font-family: 'Michroma', sans-serif; text-transform: uppercase; font-weight: 400; }
+
+    /* Duotone image treatment — keep the whole page monochrome */
+    .duo { position: relative; overflow: hidden; }
+    .duo img { filter: grayscale(1) contrast(1.05); display: block; width: 100%; height: 100%; object-fit: cover; }
+    .duo::before {
+      content: ""; position: absolute; inset: 0; z-index: 2;
+      background: linear-gradient(180deg, rgba(11,11,11,0.0) 40%, rgba(11,11,11,0.5) 100%);
+    }
+
+    /* Marquee */
+    .marquee { overflow: hidden; white-space: nowrap; }
+    .marquee__track { display: inline-flex; align-items: center; will-change: transform; animation: marquee 34s linear infinite; }
+    .marquee__track span { display: inline-flex; align-items: center; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .marquee:hover .marquee__track { animation-play-state: paused; }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-family: 'Archivo', sans-serif; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.8rem;
+      padding: 1.05rem 1.9rem; border: 1.5px solid transparent;
+      transition: transform 0.22s cubic-bezier(0.2,0.8,0.2,1), background-color 0.22s ease, color 0.22s ease, border-color 0.22s ease;
+    }
+    .btn:active { transform: translateY(1px) scale(0.995); }
+    .btn:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+
+    .btn-primary { background: #fff; color: #0B0B0B; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 18px 40px -20px rgba(255,255,255,0.35); }
+
+    .btn-primary-dark { background: #0B0B0B; color: #fff; }
+    .btn-primary-dark:hover { transform: translateY(-2px); box-shadow: var(--shadow-lift); }
+
+    .btn-ghost { background: transparent; color: #fff; border-color: rgba(255,255,255,0.35); }
+    .btn-ghost:hover { border-color: #fff; transform: translateY(-2px); }
+
+    .btn-ghost-dark { background: transparent; color: #0B0B0B; border-color: rgba(11,11,11,0.25); }
+    .btn-ghost-dark:hover { border-color: #0B0B0B; transform: translateY(-2px); }
+
+    .link-underline { position: relative; }
+    .link-underline::after {
+      content: ""; position: absolute; left: 0; bottom: -2px; height: 1.5px; width: 100%;
+      background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1);
+    }
+    .link-underline:hover::after { transform: scaleX(1); transform-origin: left; }
+
+    /* Reveal on scroll */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2,0.8,0.2,1); }
+    .reveal.in { opacity: 1; transform: none; }
+
+    /* ================================================================
+       ETHERAL SHADOW — animated hero background (vanilla port of the
+       supplied React/framer-motion component; see /components/ui).
+       Effect = SVG feTurbulence + double feDisplacementMap on a masked
+       gray shape, with the hue-rotate matrix animated via requestAnimationFrame.
+       --- TUNABLES (safe to adjust from live feedback): ---------------- */
+    :root {
+      --herobg-color: 150, 150, 150;   /* gray of the shadow shape */
+      --herobg-opacity: 0.55;          /* overall presence over the black hero */
+      --herobg-displace: 100px;        /* how far the turbulence pushes the shape */
+      --herobg-noise: 0.22;            /* film-noise strength */
+    }
+    .hero-shadow { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; opacity: var(--herobg-opacity); }
+    .hero-shadow__filter { position: absolute; width: 0; height: 0; }
+    .hero-shadow__displace {
+      position: absolute; inset: calc(-1 * var(--herobg-displace));
+      filter: url(#heroShadow) blur(4px);
+    }
+    .hero-shadow__shape {
+      width: 100%; height: 100%;
+      background-color: rgba(var(--herobg-color), 1);
+      -webkit-mask-image: url('/brand_assets/shadow-mask.png'); mask-image: url('/brand_assets/shadow-mask.png');
+      -webkit-mask-size: cover; mask-size: cover;
+      -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+      -webkit-mask-position: center; mask-position: center;
+    }
+    .hero-shadow__noise {
+      position: absolute; inset: 0;
+      background-image: url('/brand_assets/noise.png');
+      background-size: 240px; background-repeat: repeat;
+      opacity: var(--herobg-noise); mix-blend-mode: overlay;
+    }
+
+    /* Lookbook / "The fits" cards — real LAA model photography, mono by default, colour on hover */
+    .fit-card { position: relative; display: block; overflow: hidden; }
+    .fit-card img { width: 100%; height: auto; display: block; filter: grayscale(1) contrast(1.03); transition: filter 0.5s ease, transform 0.6s cubic-bezier(0.2,0.8,0.2,1); }
+    .fit-card:hover img { filter: grayscale(0); transform: scale(1.02); }
+    .fit-card::before { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 38%; background: linear-gradient(180deg, rgba(11,11,11,0) 0%, rgba(11,11,11,0.6) 100%); z-index: 1; pointer-events: none; }
+    .fit-card__cap { position: absolute; bottom: 1rem; left: 1rem; z-index: 2; font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.85); }
+    .fit-card:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .marquee__track { animation: none; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .fit-card img { transition: none; }
+    }
+  </style>
+</head>
+
+<body class="bg-paper text-ink font-sans antialiased">
+
+  <!-- NAV -->
+  <header class="sticky top-0 z-50 bg-ink text-paper border-b border-white/10">
+    <nav class="mx-auto max-w-[1400px] px-5 sm:px-8 h-16 flex items-center justify-between">
+      <a href="#top" class="flex items-center gap-3 shrink-0" aria-label="Los Angeles Apparel — The Flea Market">
+        <img src="/brand_assets/los_angeles_apparel_logo.jpg" alt="Los Angeles Apparel" class="h-9 w-9 object-cover" />
+        <span class="hidden sm:block wordmark text-[0.58rem] tracking-[0.14em] text-white/70 leading-[1.5]">The Flea<br/>Market</span>
+      </a>
+      <div class="flex items-center gap-6 sm:gap-8 font-mono text-[0.72rem] tracking-[0.18em] uppercase">
+        <a href="#market" class="hidden md:inline-block link-underline text-white/80 hover:text-white transition-colors">The Market</a>
+        <a href="#shop" class="hidden md:inline-block link-underline text-white/80 hover:text-white transition-colors">How to Shop</a>
+        <a href="#visit" class="link-underline text-white/80 hover:text-white transition-colors">Visit</a>
+        <a href="https://www.instagram.com/losangelesapparelmarket/" target="_blank" rel="noopener" class="btn btn-ghost !py-2 !px-4 !text-[0.68rem]">Instagram</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section id="top" class="relative bg-ink text-paper grain overflow-hidden">
+
+    <!-- Animated ethereal-shadow background (behind hero content) -->
+    <div class="hero-shadow" aria-hidden="true">
+      <svg class="hero-shadow__filter" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="heroShadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feTurbulence result="undulation" numOctaves="2" baseFrequency="0.0005,0.002" seed="0" type="turbulence" />
+            <feColorMatrix id="heroShadowHue" in="undulation" type="hueRotate" values="180" />
+            <feColorMatrix in="dist" result="circulation" type="matrix" values="4 0 0 0 1  4 0 0 0 1  4 0 0 0 1  1 0 0 0 0" />
+            <feDisplacementMap in="SourceGraphic" in2="circulation" scale="100" result="dist" />
+            <feDisplacementMap in="dist" in2="undulation" scale="100" result="output" />
+          </filter>
+        </defs>
+      </svg>
+      <div class="hero-shadow__displace">
+        <div class="hero-shadow__shape"></div>
+      </div>
+      <div class="hero-shadow__noise"></div>
+    </div>
+
+    <div class="relative z-10 mx-auto max-w-[1400px] px-5 sm:px-8 pt-16 sm:pt-24 pb-0 grid lg:grid-cols-[1.15fr_0.85fr] gap-10 lg:gap-14 items-stretch">
+      <!-- Left: copy -->
+      <div class="pb-16 sm:pb-24">
+        <p class="wordmark text-[0.62rem] tracking-[0.2em] text-white/55 mb-6">Los Angeles Apparel</p>
+        <h1 class="display-xl">The<br/>Flea<br/>Market</h1>
+        <p class="mt-8 max-w-md text-[1.05rem] leading-[1.7] text-white/70">
+          Overstock, one-offs, and imperfect garments from the factory floor — sold in person on 59th Street. Made a few blocks from where you'll buy it.
+        </p>
+        <div class="mt-9 flex flex-wrap items-center gap-4">
+          <a href="#visit" class="btn btn-primary">Visit the market
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a href="https://www.depop.com/losangelesapparelsamples/" target="_blank" rel="noopener" class="btn btn-ghost">Shop the Depop</a>
+        </div>
+        <div class="mt-10 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-[0.72rem] tracking-[0.16em] uppercase text-white/55">
+          <span>Open Daily</span><span class="text-white/25">/</span>
+          <span>10AM–8PM</span><span class="text-white/25">/</span>
+          <span>Free Entry</span>
+        </div>
+      </div>
+
+      <!-- Right: image -->
+      <div class="duo aspect-[3/4] lg:aspect-auto lg:h-full min-h-[420px] w-full self-stretch border border-white/10">
+        <img src="/brand_assets/Model_image2.jpg" alt="Los Angeles Apparel garments modeled — tops, tanks, and skirts" style="object-position: left center;" />
+        <span class="absolute z-10 bottom-4 left-4 font-mono text-[0.62rem] tracking-[0.2em] uppercase text-white/75">Fig. 01 — On 59th Street</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE (signature) -->
+  <div class="marquee bg-paper text-ink border-y border-ink py-4 select-none" aria-hidden="true">
+    <div class="marquee__track font-display uppercase text-[1.6rem] sm:text-[2.1rem] leading-none tracking-tight">
+      <span>
+        <em class="not-italic">Open Daily</em><i class="mx-6 text-muted not-italic">✷</i>
+        <em class="not-italic">10AM–8PM</em><i class="mx-6 text-muted not-italic">✷</i>
+        <em class="not-italic">Free Entry</em><i class="mx-6 text-muted not-italic">✷</i>
+        <em class="not-italic">Card Only</em><i class="mx-6 text-muted not-italic">✷</i>
+        <em class="not-italic">711 E 59th St</em><i class="mx-6 text-muted not-italic">✷</i>
+        <em class="not-italic">The Flea Market</em><i class="mx-6 text-muted not-italic">✷</i>
+      </span>
+      <span>
+        <em class="not-italic">Open Daily</em><i class="mx-6 text-muted not-italic">✷</i>
+        <em class="not-italic">10AM–8PM</em><i class="mx-6 text-muted not-italic">✷</i>
+        <em class="not-italic">Free Entry</em><i class="mx-6 text-muted not-italic">✷</i>
+        <em class="not-italic">Card Only</em><i class="mx-6 text-muted not-italic">✷</i>
+        <em class="not-italic">711 E 59th St</em><i class="mx-6 text-muted not-italic">✷</i>
+        <em class="not-italic">The Flea Market</em><i class="mx-6 text-muted not-italic">✷</i>
+      </span>
+    </div>
+  </div>
+
+  <!-- WHAT IT IS -->
+  <section id="market" class="bg-paper py-20 sm:py-28">
+    <div class="mx-auto max-w-[1400px] px-5 sm:px-8 grid lg:grid-cols-[0.9fr_1.1fr] gap-12 lg:gap-20">
+      <div class="reveal">
+        <p class="eyebrow text-muted mb-5">The Market</p>
+        <h2 class="display-lg">Made here.<br/>Sold here.</h2>
+      </div>
+      <div class="reveal max-w-xl lg:pt-3">
+        <p class="text-[1.35rem] sm:text-[1.6rem] leading-[1.45] font-medium tracking-tight">
+          Every piece is cut and sewn a few blocks from this room. Overstock, short runs, and small imperfections don't make it to the retail floor — so they come to the market instead of the landfill.
+        </p>
+        <p class="mt-6 text-[1.02rem] leading-[1.7] text-muted">
+          Sustainable fashion you can hold up to the light before you buy it. The racks change constantly, so no two visits look the same. Come dig.
+        </p>
+        <div class="mt-10 grid grid-cols-3 border-t border-hairline">
+          <div class="py-5 pr-4 border-r border-hairline">
+            <div class="display-md">7</div>
+            <div class="eyebrow text-muted mt-2">Days a week</div>
+          </div>
+          <div class="py-5 px-4 border-r border-hairline">
+            <div class="display-md">10h</div>
+            <div class="eyebrow text-muted mt-2">Open daily</div>
+          </div>
+          <div class="py-5 pl-4">
+            <div class="display-md">$0</div>
+            <div class="eyebrow text-muted mt-2">To get in</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOOKBOOK / THE FITS -->
+  <section id="fits" class="bg-ink text-paper py-20 sm:py-28 border-t border-white/10">
+    <div class="mx-auto max-w-[1400px] px-5 sm:px-8">
+      <div class="reveal flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-10">
+        <div>
+          <p class="wordmark text-[0.62rem] tracking-[0.2em] text-white/50 mb-5">Los Angeles Apparel</p>
+          <h2 class="display-lg">The fits.</h2>
+        </div>
+        <a href="https://www.instagram.com/losangelesapparelmarket/" target="_blank" rel="noopener" class="btn btn-ghost self-start sm:self-auto">See more on Instagram
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M9 7h8v8"/></svg>
+        </a>
+      </div>
+      <div class="reveal grid sm:grid-cols-2 gap-4 sm:gap-6">
+        <a href="https://www.instagram.com/losangelesapparelmarket/" target="_blank" rel="noopener" class="fit-card border border-white/10">
+          <img src="/brand_assets/Model_image1.jpg" alt="Los Angeles Apparel styles modeled — long-sleeve tops, tanks, dresses, and skirts" />
+          <span class="fit-card__cap">Fig. 02 — On the racks</span>
+        </a>
+        <a href="https://www.instagram.com/losangelesapparelmarket/" target="_blank" rel="noopener" class="fit-card border border-white/10">
+          <img src="/brand_assets/Model_image2.jpg" alt="Los Angeles Apparel styles modeled — knit tops, mini skirts, and tanks" />
+          <span class="fit-card__cap">Fig. 03 — On the racks</span>
+        </a>
+      </div>
+      <p class="reveal mt-8 max-w-xl text-white/50 text-[0.98rem] leading-[1.7]">
+        The same styles that fill the racks — overstock and short runs, marked down and sold in person. What's on the floor changes daily, so this is only a taste.
+      </p>
+    </div>
+  </section>
+
+  <!-- HOW TO SHOP -->
+  <section id="shop" class="bg-fog py-20 sm:py-28 border-y border-hairline">
+    <div class="mx-auto max-w-[1400px] px-5 sm:px-8">
+      <div class="reveal flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-12">
+        <div>
+          <p class="eyebrow text-muted mb-5">How to Shop</p>
+          <h2 class="display-lg">Two ways in.</h2>
+        </div>
+        <p class="max-w-sm text-[1rem] leading-[1.7] text-muted sm:text-right">
+          The market is the main event. Can't make it to South Central? A rotating selection lives online.
+        </p>
+      </div>
+
+      <div class="grid lg:grid-cols-[1.4fr_1fr] gap-6">
+        <!-- In person (primary) -->
+        <article class="reveal group relative bg-ink text-paper grain overflow-hidden p-8 sm:p-12 flex flex-col justify-between min-h-[420px]" style="box-shadow: var(--shadow-lift);">
+          <div class="relative z-10">
+            <div class="flex items-center justify-between">
+              <span class="eyebrow text-white/50">In Person — Primary</span>
+              <span class="font-mono text-[0.7rem] tracking-[0.18em] uppercase text-white/50">Recommended</span>
+            </div>
+            <h3 class="display-lg mt-6">Come to<br/>59th Street</h3>
+          </div>
+          <div class="relative z-10 mt-10">
+            <p class="max-w-md text-white/70 leading-[1.7]">
+              711 E 59th St, Los Angeles. Open every day, 10AM to 8PM. Free entry, card only. Bring a friend and give yourself time — the good stuff moves fast.
+            </p>
+            <a href="#visit" class="btn btn-primary mt-8">Plan your visit
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Depop (secondary) -->
+        <article class="reveal group relative bg-paper border border-ink p-8 sm:p-10 flex flex-col justify-between min-h-[420px]">
+          <div>
+            <span class="eyebrow text-muted">Online — Secondary</span>
+            <h3 class="display-md mt-6">On Depop</h3>
+            <p class="mt-5 text-muted leading-[1.7]">
+              A rotating selection is listed on our Depop shop. Ships anywhere — handy when you can't dig through the racks yourself.
+            </p>
+          </div>
+          <div class="mt-10">
+            <div class="font-mono text-[0.78rem] tracking-[0.12em] uppercase text-ink border-t border-hairline pt-5 mb-6">
+              @losangelesapparelsamples
+            </div>
+            <a href="https://www.depop.com/losangelesapparelsamples/" target="_blank" rel="noopener" class="btn btn-ghost-dark w-full justify-center">Open the Depop
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M9 7h8v8"/></svg>
+            </a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISIT -->
+  <section id="visit" class="bg-paper py-20 sm:py-28">
+    <div class="mx-auto max-w-[1400px] px-5 sm:px-8">
+      <div class="reveal mb-12">
+        <p class="eyebrow text-muted mb-5">Visit</p>
+        <h2 class="display-lg max-w-3xl">Find us on<br/>59th Street.</h2>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-6 items-stretch">
+        <!-- Details -->
+        <div class="reveal border border-ink p-8 sm:p-12 flex flex-col justify-between">
+          <div class="space-y-8">
+            <div>
+              <div class="eyebrow text-muted mb-3">Address</div>
+              <div class="display-md">711 E 59th St</div>
+              <div class="font-mono text-[0.82rem] tracking-[0.1em] uppercase text-muted mt-2">Los Angeles, CA 90001</div>
+            </div>
+            <div class="grid grid-cols-2 gap-6 border-t border-hairline pt-8">
+              <div>
+                <div class="eyebrow text-muted mb-3">Hours</div>
+                <div class="text-[1.05rem] font-semibold">Open Daily</div>
+                <div class="font-mono text-[0.82rem] text-muted mt-1">10:00 — 20:00</div>
+              </div>
+              <div>
+                <div class="eyebrow text-muted mb-3">Good to know</div>
+                <div class="text-[1.05rem] font-semibold">Free entry</div>
+                <div class="font-mono text-[0.82rem] text-muted mt-1">Card only</div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-10 flex flex-wrap gap-4">
+            <a href="https://www.google.com/maps/dir/?api=1&destination=711+E+59th+St+Los+Angeles+CA+90001" target="_blank" rel="noopener" class="btn btn-primary-dark">Get directions
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="https://www.instagram.com/losangelesapparelmarket/" target="_blank" rel="noopener" class="btn btn-ghost-dark">Follow @losangelesapparelmarket</a>
+          </div>
+        </div>
+
+        <!-- Map placeholder -->
+        <div class="duo relative min-h-[360px] lg:min-h-full" style="box-shadow: var(--shadow-lift);">
+          <img src="https://placehold.co/1000x800/353535/d6d6d6/png?text=711+E+59th+St" alt="Map showing the Los Angeles Apparel Flea Market at 711 E 59th St" />
+          <span class="absolute z-10 bottom-4 left-4 font-mono text-[0.62rem] tracking-[0.2em] uppercase text-white/70">South Central · Los Angeles</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-ink text-paper grain relative overflow-hidden">
+    <div class="relative z-10 mx-auto max-w-[1400px] px-5 sm:px-8 py-16 sm:py-20">
+      <div class="grid md:grid-cols-[1.4fr_1fr] gap-12 border-b border-white/10 pb-14">
+        <div>
+          <div class="flex items-center gap-4 mb-6">
+            <img src="/brand_assets/los_angeles_apparel_logo.jpg" alt="Los Angeles Apparel" class="h-11 w-11 object-cover" />
+            <span class="wordmark text-[0.6rem] tracking-[0.14em] text-white/60 leading-[1.5]">The Flea Market<br/>on 59th Street</span>
+          </div>
+          <p class="display-md max-w-xl">Come dig<br/>on 59th.</p>
+        </div>
+        <div class="grid grid-cols-2 gap-8 font-mono text-[0.78rem] tracking-[0.1em] uppercase">
+          <div>
+            <div class="text-white/40 mb-4">Shop</div>
+            <ul class="space-y-3">
+              <li><a href="#visit" class="link-underline text-white/80 hover:text-white">The Market</a></li>
+              <li><a href="https://www.depop.com/losangelesapparelsamples/" target="_blank" rel="noopener" class="link-underline text-white/80 hover:text-white">Depop</a></li>
+              <li><a href="https://losangelesapparel.net/" target="_blank" rel="noopener" class="link-underline text-white/80 hover:text-white">Retail Store</a></li>
+            </ul>
+          </div>
+          <div>
+            <div class="text-white/40 mb-4">Follow</div>
+            <ul class="space-y-3">
+              <li><a href="https://www.instagram.com/losangelesapparelmarket/" target="_blank" rel="noopener" class="link-underline text-white/80 hover:text-white">Instagram</a></li>
+              <li><span class="text-white/40 lowercase tracking-normal normal-case">@losangelesapparelmarket</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="pt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 font-mono text-[0.68rem] tracking-[0.14em] uppercase text-white/40">
+        <span>© 2026 Los Angeles Apparel · The Flea Market</span>
+        <span>711 E 59th St, Los Angeles, CA 90001 · Open Daily 10–8</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      }
+    }, { threshold: 0.14 });
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+    // Ethereal-shadow hero background: animate the hue-rotate matrix 0->360 in a loop.
+    // (Vanilla replacement for framer-motion's animate(); mirrors the component's speed:90.)
+    (function animateHeroShadow() {
+      const hue = document.getElementById('heroShadowHue');
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!hue || prefersReduced) return; // reduced motion -> static shape
+      const PERIOD = 5800; // ms per full 0->360 sweep
+      let start;
+      function tick(t) {
+        if (start === undefined) start = t;
+        const value = (((t - start) / PERIOD) * 360) % 360;
+        hue.setAttribute('values', String(value));
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    })();
+  </script>
+</body>
+</html>

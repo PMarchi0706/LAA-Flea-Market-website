@@ -7,6 +7,44 @@
   <link rel="icon" href="/brand_assets/los_angeles_apparel_logo.jpg" />
   <meta name="description" content="Overstock, one-offs, and imperfect garments from the Los Angeles Apparel factory floor — sold in person at The Flea Market on 59th Street. Open daily, 10AM–8PM. Free entry." />
 
+  <!-- Local business structured data (schema.org) — helps Google show the market with hours/address.
+       TODO: update "url" and "image" to the final custom domain once it's live. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ClothingStore",
+    "name": "The Flea Market — Los Angeles Apparel",
+    "description": "The in-person overstock market from Los Angeles Apparel. Imperfect garments, overstock, and short runs sold on 59th Street in South Central LA, plus a rotating selection on Depop.",
+    "url": "https://laa-flea-market-website.vercel.app/",
+    "image": "https://laa-flea-market-website.vercel.app/brand_assets/los_angeles_apparel_logo.jpg",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "711 E 59th St",
+      "addressLocality": "Los Angeles",
+      "addressRegion": "CA",
+      "postalCode": "90001",
+      "addressCountry": "US"
+    },
+    "openingHoursSpecification": [{
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      "opens": "10:00",
+      "closes": "20:00"
+    }],
+    "paymentAccepted": "Credit Card, Debit Card",
+    "isAccessibleForFree": true,
+    "parentOrganization": {
+      "@type": "Organization",
+      "name": "Los Angeles Apparel",
+      "url": "https://losangelesapparel.net/"
+    },
+    "sameAs": [
+      "https://www.instagram.com/losangelesapparelmarket/",
+      "https://www.depop.com/losangelesapparelsamples/"
+    ]
+  }
+  </script>
+
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -40,8 +78,10 @@
   <style>
     :root { --shadow-lift: 0 24px 60px -32px rgba(11,11,11,0.45); }
 
-    html { scroll-behavior: smooth; }
-    body { -webkit-font-smoothing: antialiased; }
+    /* overflow-x: clip guards against sub-pixel horizontal spill from the marquee /
+       hero-shadow layers without creating a scroll container (so the sticky nav still works). */
+    html { scroll-behavior: smooth; overflow-x: clip; }
+    body { -webkit-font-smoothing: antialiased; overflow-x: clip; }
 
     ::selection { background: #0B0B0B; color: #fff; }
 
@@ -271,8 +311,8 @@
 
       <!-- Right: image -->
       <div class="duo aspect-[3/4] lg:aspect-auto lg:h-full min-h-[420px] w-full self-stretch border border-white/10">
-        <img src="/brand_assets/Model_image2.jpg" alt="Los Angeles Apparel garments modeled — tops, tanks, and skirts" style="object-position: left center;" />
-        <span class="absolute z-10 bottom-4 left-4 font-mono text-[0.62rem] tracking-[0.2em] uppercase text-white/75">Fig. 01 — On 59th Street</span>
+        <img src="/brand_assets/storefront.jpg" alt="The entrance to the Los Angeles Apparel Factory Flea Market at 711 E 59th St" style="object-position: center;" />
+        <span class="absolute z-10 bottom-4 left-4 font-mono text-[0.62rem] tracking-[0.2em] uppercase text-white/85">Fig. 01 — 711 E 59th St</span>
       </div>
     </div>
   </section>
@@ -298,6 +338,18 @@
       </span>
     </div>
   </div>
+
+  <!-- INSIDE THE MARKET (full-bleed establishing shot) -->
+  <section class="relative w-full overflow-hidden bg-ink" aria-label="Inside The Flea Market">
+    <div class="relative h-[52vh] min-h-[360px] max-h-[620px]">
+      <img src="/brand_assets/market-wide.jpg" alt="Inside The Flea Market — rows of overstock racks in the South Central warehouse" class="absolute inset-0 w-full h-full object-cover" style="filter: grayscale(1) contrast(1.05);" />
+      <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/25 to-ink/45"></div>
+      <div class="relative z-10 h-full mx-auto max-w-[1400px] px-5 sm:px-8 flex flex-col justify-end pb-10 sm:pb-14">
+        <p class="wordmark text-[0.62rem] tracking-[0.2em] text-white/75 mb-4">Inside the market</p>
+        <h2 class="display-lg text-paper max-w-3xl">Rows that<br/>change daily.</h2>
+      </div>
+    </div>
+  </section>
 
   <!-- WHAT IT IS -->
   <section id="market" class="bg-paper py-20 sm:py-28">
@@ -381,11 +433,13 @@
 
       <div class="grid lg:grid-cols-[1.4fr_1fr] gap-6">
         <!-- In person (primary) -->
-        <article class="reveal group relative bg-ink text-paper grain overflow-hidden p-8 sm:p-12 flex flex-col justify-between min-h-[420px]" style="box-shadow: var(--shadow-lift);">
+        <article class="reveal group relative bg-ink text-paper overflow-hidden p-8 sm:p-12 flex flex-col justify-between min-h-[420px]" style="box-shadow: var(--shadow-lift);">
+          <img src="/brand_assets/market-racks.jpg" alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" style="filter: grayscale(1) contrast(1.05);" />
+          <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/85 to-ink/70"></div>
           <div class="relative z-10">
             <div class="flex items-center justify-between">
-              <span class="eyebrow text-white/50">In Person — Primary</span>
-              <span class="font-mono text-[0.7rem] tracking-[0.18em] uppercase text-white/50">Recommended</span>
+              <span class="eyebrow text-white/60">In Person — Primary</span>
+              <span class="font-mono text-[0.7rem] tracking-[0.18em] uppercase text-white/60">Recommended</span>
             </div>
             <h3 class="display-lg mt-6">Come to<br/>59th Street</h3>
           </div>

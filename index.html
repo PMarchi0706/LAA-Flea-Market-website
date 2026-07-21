@@ -218,13 +218,21 @@
     .fit-card__cap { position: absolute; bottom: 1rem; left: 1rem; z-index: 2; font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.85); }
     .fit-card:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 
-    /* Live "open now" status pill (hero) — computed from LA time */
-    .status-pill { display: inline-flex; align-items: center; gap: 0.55rem; border: 1px solid rgba(255,255,255,0.25); border-radius: 999px; padding: 0.42rem 0.9rem; font-family: 'Space Mono', monospace; font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.9); }
-    .status-dot { width: 8px; height: 8px; border-radius: 999px; background: rgba(255,255,255,0.5); position: relative; flex: none; }
-    .status-pill[data-status="open"] .status-dot { background: #fff; }
-    .status-pill[data-status="open"] .status-dot::after { content: ""; position: absolute; inset: 0; border-radius: 999px; background: #fff; animation: statusPulse 2.4s ease-out infinite; }
+    /* Live "open now" status pill (hero) — computed from LA time.
+       Green while open; hover/focus reveals the hours tooltip. */
+    .status-pill { position: relative; display: inline-flex; align-items: center; gap: 0.55rem; border: 1px solid rgba(255,255,255,0.25); border-radius: 999px; padding: 0.42rem 0.9rem; font-family: 'Space Mono', monospace; font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.9); cursor: help; transition: color 0.3s ease, border-color 0.3s ease; }
+    .status-pill:focus-visible { outline: 2px solid #34C759; outline-offset: 3px; }
+    .status-dot { width: 8px; height: 8px; border-radius: 999px; background: rgba(255,255,255,0.5); position: relative; flex: none; transition: background-color 0.3s ease; }
+    .status-pill[data-status="open"] { color: #7EE8A6; border-color: rgba(52,199,89,0.55); }
+    .status-pill[data-status="open"] .status-dot { background: #34C759; }
+    .status-pill[data-status="open"] .status-dot::after { content: ""; position: absolute; inset: 0; border-radius: 999px; background: #34C759; animation: statusPulse 2.4s ease-out infinite; }
     .status-pill[data-status="closed"] .status-dot { background: transparent; border: 1.5px solid rgba(255,255,255,0.55); }
     @keyframes statusPulse { 0% { transform: scale(1); opacity: 0.7; } 100% { transform: scale(2.8); opacity: 0; } }
+
+    /* Hours tooltip revealed on hover/focus of the status pill */
+    .status-tip { position: absolute; bottom: calc(100% + 10px); left: 50%; transform: translate(-50%, 4px); white-space: nowrap; background: #fff; color: #0B0B0B; font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.08em; text-transform: none; padding: 0.42rem 0.7rem; border-radius: 5px; opacity: 0; visibility: hidden; pointer-events: none; box-shadow: var(--shadow-lift); z-index: 20; transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.2,0.8,0.2,1); }
+    .status-tip::after { content: ""; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 5px solid transparent; border-top-color: #fff; }
+    .status-pill:hover .status-tip, .status-pill:focus-visible .status-tip { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
 
     /* Embedded map (Visit) — full colour */
     .map-embed { position: relative; overflow: hidden; }
@@ -236,6 +244,7 @@
       .reveal { opacity: 1; transform: none; transition: none; }
       .fit-card img { transition: none; }
       .status-pill[data-status="open"] .status-dot::after { animation: none; }
+      .status-tip { transition: none; }
     }
   </style>
 </head>
@@ -295,15 +304,11 @@
           <a href="https://www.depop.com/losangelesapparelsamples/" target="_blank" rel="noopener" class="btn btn-ghost">Shop the Depop</a>
         </div>
         <div class="mt-10">
-          <span id="marketStatus" class="status-pill" data-status="loading" role="status" aria-live="polite">
+          <span id="marketStatus" class="status-pill" data-status="loading" role="status" aria-live="polite" tabindex="0">
             <span class="status-dot"></span>
             <span class="status-text">Checking hours…</span>
+            <span class="status-tip" aria-hidden="true">Open: 10:00AM – 8:00PM daily</span>
           </span>
-        </div>
-        <div class="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-[0.72rem] tracking-[0.16em] uppercase text-white/55">
-          <span>Open Daily</span><span class="text-white/25">/</span>
-          <span>10AM–8PM</span><span class="text-white/25">/</span>
-          <span>Free Entry</span>
         </div>
       </div>
 
